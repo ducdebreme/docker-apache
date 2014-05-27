@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t duc/mysql .
+docker build -t duc/apache .

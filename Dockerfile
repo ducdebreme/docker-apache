@@ -15,8 +15,17 @@ RUN pear install drush/drush
 RUN pear install Console_Table
 
 
-ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
-ADD ./startup.sh /opt/startup.sh
+RUN a2enmod rewrite
+
+ADD ./conf/apache/000-default /etc/apache2/sites-enabled/
+ADD ./conf/apache/supervisord-apache2.conf /etc/supervisor/conf.d/
+ADD ./conf/apache/start-apache.sh /opt/start-apache.sh
+
+ADD ./conf/php/php.ini /etc/php5/apache2/
+ADD ./conf/php/xcache.ini /etc/php5/conf.d/
+
+ADD ./conf/memcached/supervisord-memcached.conf /etc/supervisor/conf.d/
+
 ADD ./run.sh /opt/run.sh
 
 RUN chmod 755 /opt/*.sh
